@@ -19,7 +19,6 @@ const WorkoutSchema = new Schema({
       sets: Number
     }
   ]
-
   
 });
 

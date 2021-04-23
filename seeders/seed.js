@@ -1,5 +1,7 @@
 let mongoose = require("mongoose");
 let Workout = require("../models/workouts")
+
+// changed the url to reflect the proper route so i can establish a connection to the server with my seeded database.
 mongoose.connect(
   process.env.MONGODB_URI ||'mongodb+srv://adminGonzo:mongo77@cluster0.6sckj.mongodb.net/workoutTracker?retryWrites=true&w=majority', {
   useNewUrlParser: true,

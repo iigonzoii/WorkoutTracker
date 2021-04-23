@@ -22,10 +22,12 @@ mongoose.connect(
     useCreateIndex: true, 
     useFindAndModify: false
   });
-
+// using http method get to reach the api workouts endpoint
 app.get("/api/workouts", (req, res) => {
+  // finding all workouts using our Workoutmodel
   Workout.find({})
     .then(data => {
+      // here we take the data, and kick it down to our response in json format
       res.json(data);
     })
     .catch(err => {
