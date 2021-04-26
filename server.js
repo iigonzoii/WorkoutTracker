@@ -7,7 +7,6 @@ const path = require("path");
 
 const PORT = process.env.PORT || 3001;
 
-// const User = require("./userModel.js");
 const app = express();
 
 // app.use(logger("dev"));
@@ -41,20 +40,28 @@ app.get("/api/workouts", (req, res) => {
     });
 });
 
-app.put("/api/workouts/:_id", ({ params, body }, res) => {
-  Workout.findOneAndUpdate(
-    { _id: params.id },
-    { $push: { excercises: body } },
-    { upsert: true, useFindandModify: false },
-    (workoutUpdate) => {
-      res.json(workoutUpdate);
-    }
-  );
-});
+// app.put("/api/workouts/:_id", ({ params, body }, res) => {
+//   Workout.findOneAndUpdate(
+//     { _id: params.id },
+//     { $push: { excercises: body } },
+//     { upsert: true, useFindandModify: false },
+//     (workoutUpdate) => {
+//       res.json(workoutUpdate);
+//     }
+//   );
+// });
 
-// using our middleware to find our static excercise.html file in our public folder as we have set above in order to get our front end to display
+// below routes use middleware to find the static files that allow us to access our html, css, and js files in our public folder. 
 app.get("/exercise", (req, res) => {
   res.sendFile(path.join(__dirname, "./public/exercise.html"));
+});
+
+app.get("/stats", (req, res) => {
+  res.sendFile(path.join(__dirname, "./public/stats.html"));
+});
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "./public/index.html"));
 });
 
 app.listen(PORT, () => {
