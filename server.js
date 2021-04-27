@@ -18,7 +18,8 @@ app.use(express.static("public"));
 
 mongoose.connect(
   process.env.MONGODB_URI ||
-    "mongodb+srv://adminGonzo:mongo77@cluster0.6sckj.mongodb.net/workoutTracker?retryWrites=true&w=majority",
+    // "mongodb+srv://adminGonzo:mongo77@cluster0.6sckj.mongodb.net/workoutTracker?retryWrites=true&w=majority", 
+    "mongodb://localhost/workoutTracker",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -40,37 +41,41 @@ app.get("/api/workouts", (req, res) => {
     });
 });
 
-// app.put('/api/workouts/:id', ({params, body},res) => {
-//   Workout.excercises.findOneAndUpdate({ _id: params.id}, 
-//       {$push: 
-//           { exercises: body } 
-//       }, 
-//       { 
-//           upsert: true,
-//           useFindAndModify: false 
-//       }, 
-//       updatedWorkout => {
-//           res.json(updatedWorkout);
-//       }
-//   );
-// });
-
-app.put("/api/workouts/:id", ({ body, params }, res) => {
-  console.log(params.id),
-
-  Workout.findByIdAndUpdate(
-    params.id ,
-    { $push: { excercises: body } },
-    { new: true, runValidators: true })
-    .then((workoutUpdate) => {
-      console.log(workoutUpdate)
-      res.json(workoutUpdate);
+app.get("/api/workouts/range", (req, res) => {
+  // finding all workouts using our Workoutmodel
+  Workout.find({})
+    .then((data) => {
+      // here we take the data, and kick it down to our response in json format
+      res.json(data);
     })
     .catch((err) => {
-      res.json(err)
-    })
-  
+      res.json(err);
+    });
 });
+
+app.put('/api/workouts/:id', ({params, body},res) => {
+  Workout.findOneAndUpdate({ _id: params.id}, 
+      {$push: 
+          { exercises: body } 
+      }, 
+      { 
+          upsert: true,
+          useFindAndModify: false 
+      }, 
+      workoutUpdate => {
+          res.json(workoutUpdate);
+      }
+  );
+});
+
+app.post("/api/workouts", ({ body }, res) => {
+  Workout.create(body).then((newData => {
+      res.json(newData);
+  })).catch(err => {
+      res.json(err);
+  });
+});
+
 
 // below routes use middleware to find the static files that allow us to access our html, css, and js files in our public folder. I have these done right away so I can see the pages populate when i get the api routes to work.
 app.get("/exercise", (req, res) => {

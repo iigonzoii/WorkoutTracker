@@ -5,21 +5,46 @@ const Schema = mongoose.Schema;
 const WorkoutSchema = new Schema({
   day: {
     type: Date,
-    trim: true,
-   
+    default: Date.now
+ 
   },
 
-  excercises: [
+  exercises: [
     {
-      type: String,
-      name: String,
-      duration: Number,
-      weight: Number,
-      reps: Number,
-      sets: Number,
-      distance: Number,
-    },
+    
+      type: {
+        type: String,
+        trim: true,
+      },
+      name: {
+        type: String,
+        trim: true,
+      },
+      Duration:{
+         type: Number,
+      },
+      weight: {
+        type: Number,
+        default: 0
+      },
+      reps: {
+        type: Number,
+        default: 0
+      },
+      sets: {
+        type: Number,
+        default: 0
+      },
+      distance: {
+        type: Number,
+        default: 0
+      }
+    }
   ],
+  totalDuration: {
+    type: Number,
+    default: 0
+  },
 });
 
 const Workouts = mongoose.model("Workouts", WorkoutSchema);
