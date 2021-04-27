@@ -40,18 +40,39 @@ app.get("/api/workouts", (req, res) => {
     });
 });
 
-// app.put("/api/workouts/:_id", ({ params, body }, res) => {
-//   Workout.findOneAndUpdate(
-//     { _id: params.id },
-//     { $push: { excercises: body } },
-//     { upsert: true, useFindandModify: false },
-//     (workoutUpdate) => {
-//       res.json(workoutUpdate);
-//     }
+// app.put('/api/workouts/:id', ({params, body},res) => {
+//   Workout.excercises.findOneAndUpdate({ _id: params.id}, 
+//       {$push: 
+//           { exercises: body } 
+//       }, 
+//       { 
+//           upsert: true,
+//           useFindAndModify: false 
+//       }, 
+//       updatedWorkout => {
+//           res.json(updatedWorkout);
+//       }
 //   );
 // });
 
-// below routes use middleware to find the static files that allow us to access our html, css, and js files in our public folder. 
+app.put("/api/workouts/:id", ({ body, params }, res) => {
+  console.log(params.id),
+
+  Workout.findByIdAndUpdate(
+    params.id ,
+    { $push: { excercises: body } },
+    { new: true, runValidators: true })
+    .then((workoutUpdate) => {
+      console.log(workoutUpdate)
+      res.json(workoutUpdate);
+    })
+    .catch((err) => {
+      res.json(err)
+    })
+  
+});
+
+// below routes use middleware to find the static files that allow us to access our html, css, and js files in our public folder. I have these done right away so I can see the pages populate when i get the api routes to work.
 app.get("/exercise", (req, res) => {
   res.sendFile(path.join(__dirname, "./public/exercise.html"));
 });
