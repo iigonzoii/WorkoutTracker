@@ -18,8 +18,9 @@ app.use(express.static("public"));
 
 mongoose.connect(
   process.env.MONGODB_URI ||
-    // "mongodb+srv://adminGonzo:mongo77@cluster0.6sckj.mongodb.net/workoutTracker?retryWrites=true&w=majority", 
-    "mongodb://localhost/workoutTracker",
+    "mongodb+srv://adminGonzo:mongo77@cluster0.6sckj.mongodb.net/workoutTracker?retryWrites=true&w=majority", 
+    // below is to connect locally which is how i tested my routes before pushing to heroku 
+    // "mongodb://localhost/workoutTracker",
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -53,11 +54,16 @@ app.get("/api/workouts/range", (req, res) => {
     });
 });
 
+// here we use our update method or put to edit our workout. we find by the id and then push the body of the request(user input prompted by our front end display) into our excercises array. 
 app.put('/api/workouts/:id', ({params, body},res) => {
+  // findoneandupdate will update a single doc in a collection or view based on my query filter(id: params.id)
   Workout.findOneAndUpdate({ _id: params.id}, 
       {$push: 
           { exercises: body } 
-      }, 
+      },
+      // upsert being set to true essentially tells mongoDB to refuse insertion of a new doucment if the query doesnt match an existing document 
+      // usefindandmodify is used because without it findoneandupdate is actually deprecated
+      
       { 
           upsert: true,
           useFindAndModify: false 
@@ -68,6 +74,7 @@ app.put('/api/workouts/:id', ({params, body},res) => {
   );
 });
 
+// here we use the post method for our creation of a new workout. we post to the endpoint of api/workouts and create a workout using the input recieved from the front end prompt(the body)
 app.post("/api/workouts", ({ body }, res) => {
   Workout.create(body).then((newData => {
       res.json(newData);

@@ -3,8 +3,10 @@ let Workout = require("../models/workouts")
 
 // changed the url to reflect the proper route so i can establish a connection to the server with my seeded database.
 mongoose.connect(
-  process.env.MONGODB_URI ||"mongodb://localhost/workoutTracker"
-  // 'mongodb+srv://adminGonzo:mongo77@cluster0.6sckj.mongodb.net/workoutTracker?retryWrites=true&w=majority'
+  process.env.MONGODB_URI ||
+  // below is to connect locally which is how i tested my routes before pushing to heroku 
+  // "mongodb://localhost/workoutTracker"
+  'mongodb+srv://adminGonzo:mongo77@cluster0.6sckj.mongodb.net/workoutTracker?retryWrites=true&w=majority'
   , {
   useNewUrlParser: true,
   useUnifiedTopology: true,
