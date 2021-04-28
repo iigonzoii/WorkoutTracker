@@ -13,23 +13,20 @@
   - [Questions](#questions)
 
   ## Description
-  Note taker app using node and express. 
+  Workout Tracking app using mongoose for schema build and mongoDB for our database. user gets a very visual front end to track the progress of their fitness journey 
 
   ## Installation
-  npm install express
+  no install required. if you decide to fork repository you will npm i and edit the connection to match your own in the seed and server files
 
-  <img alt="screenshot of landing page" src="./images/nt1.jpg">
-  <img alt="screenshot of note entry screen" src="./images/nt2.jpg">
-  <img alt="screenshot of example" src="./images/nt3.jpg"> 
-  <img alt="screenshot of saved note" src="./images/nt4.jpg"> 
+  <img alt="add your exercise prompt for filling out info" src="./images/woT.jpg">
+  <img alt="bar graph and line graph showing workoutinfo" src="./images/woT2.jpg">
+  <img alt="landing page showing last workout info" src="./images/woT3.jpg"> 
+  
 
   ## Usage
-  * see above images for a step by step walk through
-  * open in your browser and click on get started
-  * click on Note Title and type your title, click on Note Text and type your note
-  * click the save icon in the top right corner to save your note 
-  * you can navigate your saved notes on the left by clicking on the title 
-  * click on the pencil icon in the top right corner when you're ready to add a new note
+  * follow link to deployed application
+  * choose new workout, or continue workout
+  * fill out prompted questions and hit complete when finished
 
   ## License
   ![badge](https://img.shields.io/badge/license-MIT-blue)
